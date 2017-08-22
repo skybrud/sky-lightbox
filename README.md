@@ -10,7 +10,7 @@ A lightbox component written in Vue
 
 ## Usage
 
-`<sky-lightbox :items="itemsArray" type="images|videos"></sky-lightbox>`
+`<sky-lightbox :items="[{}, {}, {}]" type="images|videos"></sky-lightbox>`
 
 - `items` is an Array of objects with `src` for both images and videos, but also `poster` for videos.
 - `type` is a String determining if content is images or videos. If empty or not set, defaults to images.
