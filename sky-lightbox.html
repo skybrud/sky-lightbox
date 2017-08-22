@@ -1,14 +1,55 @@
-<div class="lightbox" ng-if="active.obj.image.length > 0">
-	<div class="wrap" id="imgWrap">
-		<div class="display" id="imgDisplay" data-stt="tester" ng-style="active.size">
-			<img id="img" ng-src="{{active.obj.image}}" ng-if="!active.obj.video" ng-style="active.size" />
-			<div class="outer" ng-if="active.obj.video" ng-style="active.size"><div class="inner"><iframe ng-src="{{active.obj.videourl}}"></iframe></div></div>
-			<button no-skyform ng-click="close()">Close</button>
-			<div class="controls">
-				<button ng-click="prev()" no-skyform ng-show="galleries[active.gallery].length > 1">Prev</button>
-				<span ng-show="galleries[active.gallery].length > 1">{{active.index+1}} / {{galleries[active.gallery].length}}</span>
-				<button ng-click="next()" no-skyform ng-show="galleries[active.gallery].length > 1">Next</button>
-			</div>
-		</div>
+<div
+	v-bind:class="['sky-lightbox', { open: open }]">
+
+	<button
+		class="next"
+		v-on:click="next">Næste</button>
+
+	<button
+		class="previous"
+		v-on:click="previous">Forrige</button>
+
+	<button
+		class="close"
+		v-on:click="close">Luk</button>
+
+	<div class="container">
+
+		<!-- TODO: Find better way to determine type maybe -->
+		<ul
+			class="media"
+			v-if="type === 'images' || !type">
+
+			<li
+				v-for="(item, index) in items"
+				v-bind:class="{ active: index === activeIndex }">
+
+				<sky-crop v-bind:src="item.src"></sky-crop>
+			</li>
+		</ul>
+
+		<ul
+			class="media"
+			v-if="type === 'videos'">
+
+			<li
+				v-for="(item, index) in items"
+				v-bind:class="{ active: index === activeIndex }">
+
+				<sky-video
+					v-bind:poster="item.poster"
+					v-bind:src="item.src">
+				</sky-video>
+
+			</li>
+		</ul>
 	</div>
-</div><div ng-transclude></div>
+
+	<ul class="navigation">
+		<li
+			v-for="(item, index) in items"
+			v-on:click="setActive(index)"
+			v-bind:class="{ active: index === activeIndex }">
+		</li>
+	</ul>
+</div>
