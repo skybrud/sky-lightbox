@@ -30,16 +30,6 @@
 	.container {
 		@include grid(top bottom left right, 5, 10);
 		position: absolute;
-		top: 60px;
-		bottom: 120px;
-		left: 20px;
-		right: 20px;
-		// @include gt(20) {
-		// 	top: 15%;
-		// 	bottom: 15%;
-		// 	left: 15%;
-		// 	right: 15%;
-		// }
 	}
 
 	.media {
@@ -68,7 +58,7 @@
 		right: 0;
 		top: 100%;
 		display: flex;
-		color: $color-blue-light;
+		color: $color-1;
 		z-index: 20;
 
 		button {
@@ -82,7 +72,7 @@
 			&:hover,
 			&:focus {
 				outline: none;
-				color: darken($color-blue-light, 15%);
+				color: darken($color-1, 15%);
 			}
 
 			.svg-arrow {
