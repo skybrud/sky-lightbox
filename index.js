@@ -1,13 +1,13 @@
 import Vue from 'vue';
-import store from 'store';
+import Store from 'store';
 
-import skyLightboxStore from './store';
-import skyLightbox from './sky-lightbox';
-import skyLightboxToggle from './sky-lightbox-toggle';
+import SkyLightbox from './SkyLightbox';
+import SkyLightboxToggle from './SkyLightboxToggle';
+import SkyLightboxStore from './store';
 
-store.registerModule('skyLightbox', skyLightboxStore);
+Store.addModule('SkyLightbox', SkyLightboxStore);
 
-Vue.component('sky-lightbox', skyLightbox);
-Vue.component('sky-lightbox-toggle', skyLightboxToggle);
+Vue.component('SkyLightbox', SkyLightbox);
+Vue.component('SkyLightboxToggle', SkyLightboxToggle);
 
-export default skyLightbox;
+export default SkyLightbox;

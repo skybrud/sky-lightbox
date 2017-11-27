@@ -1,18 +1,18 @@
 import Vue from 'vue';
 
 const mutations = {
-	register(state, p) {
+	REGISTER(state, p) {
 		Vue.set(state.overlays, p.name, {
 			name: p.name,
 			open: p.open,
 			activeIndex: 0,
 		});
 	},
-	setActiveIndex(state, p) {
+	SET_ACTIVE_INDEX(state, p) {
 		const overlay = state.overlays[p.name];
 		Vue.set(overlay, 'activeIndex', p.activeIndex);
 	},
-	toggle(state, p) {
+	TOGGLE(state, p) {
 		const overlay = state.overlays[p.name];
 		Vue.set(overlay, 'open', !overlay.open);
 
@@ -20,7 +20,7 @@ const mutations = {
 		// set to 0 if not set in payload
 		Vue.set(overlay, 'activeIndex', p.activeIndex || 0);
 	},
-	close(state, name) {
+	CLOSE(state, name) {
 		const overlay = state.overlays[name];
 		Vue.set(overlay, 'open', false);
 	},

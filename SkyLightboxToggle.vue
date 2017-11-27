@@ -9,12 +9,12 @@ export default {
 	methods: {
 		toggle() {
 			if (this.name) {
-				this.$store.commit('skyLightbox/toggle', {
+				this.$store.commit('SkyLightbox/TOGGLE', {
 					name: this.name,
 				});
 			}
 		},
 	},
-	template: '<button class="sky-lightbox-toggle" v-on:click="toggle"><slot></slot></button>',
+	template: '<button class="sky-lightbox-toggle" @click="toggle"><slot></slot></button>',
 };
 </script>

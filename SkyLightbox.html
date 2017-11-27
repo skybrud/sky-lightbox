@@ -1,0 +1,100 @@
+<div :class="['sky-lightbox', { open: open }]">
+
+	<div
+		@click="close"
+		class="lightbox-dim"
+	></div>
+
+	<button
+		v-if="navigation === 'bullets'"
+		@click="next"
+		class="next"
+	>
+		<SvgWedge class="svg-wedge" />
+	</button>
+
+	<button
+		v-if="navigation === 'bullets'"
+		@click="previous"
+		class="previous"
+	>
+		<SvgWedge class="svg-wedge" />
+	</button>
+
+	<button
+		class="close"
+		@click="close"
+	>
+		<SvgCross class="svg-cross" />
+	</button>
+
+	<div class="container">
+
+		<!-- TODO: Find better way to determine type maybe -->
+		<ul
+			class="media"
+			v-if="type === 'images' || !type"
+		>
+
+			<li
+				v-for="(item, index) in items"
+				:class="{ active: index === activeIndex }">
+
+				<SkyCrop
+					mode="contain"
+					:src="item.imageUrl"
+				/>
+			</li>
+		</ul>
+
+		<ul
+			class="media"
+			v-if="type === 'videos'"
+		>
+			<li
+				v-for="(item, index) in items"
+				:class="{ active: index === activeIndex }"
+			>
+				<SkyVideo
+					:poster="item.poster"
+					:src="item.src"
+				/>
+
+			</li>
+		</ul>
+
+		<div
+			v-if="navigation === 'numbers'"
+			class="numbers"
+		>
+			<button
+				class="numbers-previous"
+				@click="previous"
+			>
+				<SvgArrow class="svg-arrow" />
+			</button>
+
+			<span class="numbers-numbers">
+				{{ activeIndex + 1 }} / {{ items.length }}
+			</span>
+
+			<button
+				class="numbers-next"
+				@click="next"
+			>
+				<SvgArrow class="svg-arrow" />
+			</button>
+		</div>
+	</div>
+
+	<ul
+		v-if="navigation === 'bullets'"
+		class="bullets"
+	>
+		<li
+			v-for="(item, index) in items"
+			@click="setActive(index)"
+			:class="{ active: index === activeIndex }"
+		/>
+	</ul>
+</div>
