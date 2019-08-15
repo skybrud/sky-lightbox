@@ -200,7 +200,7 @@ function contruct(Vue, options) {
 				if (!el.dataset.skyLightboxGroup) {
 					images = [el];
 				} else {
-					images = [].concat( document.querySelectorAll(("[data-sky-lightbox-group=\"" + (el.dataset.skyLightboxGroup) + "\"]")) );
+					images = Array.from(document.querySelectorAll(("[data-sky-lightbox-group=\"" + (el.dataset.skyLightboxGroup) + "\"]")));
 				}
 
 				Vue.set(vm, 'images', images.map(function (e) { return e.dataset.skyLightboxSrc; }));

@@ -100,9 +100,7 @@ export default function contruct(Vue, options) {
 				if (!el.dataset.skyLightboxGroup) {
 					images = [el];
 				} else {
-					images = [
-						...document.querySelectorAll(`[data-sky-lightbox-group="${el.dataset.skyLightboxGroup}"]`),
-					];
+					images = Array.from(document.querySelectorAll(`[data-sky-lightbox-group="${el.dataset.skyLightboxGroup}"]`));
 				}
 
 				Vue.set(vm, 'images', images.map(e => e.dataset.skyLightboxSrc));
