@@ -1,6 +1,6 @@
 {
 	"name": "sky-lightbox",
-	"version": "0.0.1",
+	"version": "0.0.2-0",
 	"description": "Vue directive for displaying content in lightbox",
 	"main": "./dist/sky-lightbox.ssr.js",
 	"module": "./dist/sky-lightbox.esm.js",
