@@ -5,7 +5,6 @@ import SkyLightbox from './SkyLightbox.vue';
 const install = (Vue, settings) => {
 	const defaultOptions = {
 		altAsTitle: false,
-		// thumbnails: false,
 		openOn: 'click',
 		lightbox: SkyLightbox,
 	};

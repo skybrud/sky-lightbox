@@ -8,7 +8,6 @@ export default {
 			closed: true,
 			uiTimeout: null,
 			handlers: {},
-			thumbnails: false,
 		};
 	},
 	watch: {

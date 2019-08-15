@@ -47,8 +47,6 @@ const config = {
   altAsTitle: false,
   // Event listener to open gallery will be applied to <img> element
   openOn: 'click',
-  // Show thumbnails for all groups with more than 1 image
-  thumbnails: false,
   // Component to use as lightbox overlay instead of provided compoenent
   lightbox: SkyLightbox, // Internal component name.
 }

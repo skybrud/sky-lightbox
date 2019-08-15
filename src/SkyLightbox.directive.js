@@ -4,7 +4,6 @@ const addPluginAttributes = (el, binding, options) => {
 	let openOn;
 	let src = el.src; // eslint-disable-line prefer-destructuring
 	let title;
-	// let thumbnails;
 	const events = {};
 
 	if (options.altAsTitle) title = el.alt;
@@ -12,7 +11,6 @@ const addPluginAttributes = (el, binding, options) => {
 	/* eslint-disable prefer-destructuring */
 	// Assigning values from plugin initialization options here
 	openOn = options.openOn;
-	// thumbnails = options.thumbnails;
 	/* eslint-enable prefer-destructuring */
 
 	// Overriding options if they're provided in binding.value
@@ -25,13 +23,6 @@ const addPluginAttributes = (el, binding, options) => {
 		events.opened = binding.value.opened;
 		events.closed = binding.value.closed;
 		events.changed = binding.value.changed;
-
-		// binding.value.thumbnails could be set to false, (part before || will always be ignored)
-		// that's why we're comparing it to undefined but not using approach
-		// as in src, group, title, etc.
-		// if (binding.value.thumbnails !== undefined) {
-		// 	thumbnails = binding.value.thumbnails; // eslint-disable-line prefer-destructuring
-		// }
 	}
 
 	// Setting up data attributes for dynamic properties
@@ -39,7 +30,6 @@ const addPluginAttributes = (el, binding, options) => {
 
 	if (group) el.setAttribute('data-sky-lightbox-group', group);
 	if (title) el.setAttribute('data-sky-lightbox-title', title);
-	// if (thumbnails) el.setAttribute('data-sky-lightbox-thumbnails', thumbnails);
 
 	if (!src) console.error('sky-lightbox element missing src parameter.');
 
@@ -49,7 +39,6 @@ const addPluginAttributes = (el, binding, options) => {
 		title,
 		events,
 		openOn,
-		// thumbnails,
 	};
 };
 
@@ -105,7 +94,6 @@ export default function contruct(Vue, options) {
 
 				Vue.set(vm, 'images', images.map(e => e.dataset.skyLightboxSrc));
 				Vue.set(vm, 'titles', images.map(e => e.dataset.skyLightboxTitle));
-				// Vue.set(vm, 'thumbnails', el.dataset.skyLightboxThumbnails === 'true');
 				Vue.set(vm, 'currentImageIndex', images.indexOf(el));
 				Vue.set(vm, 'handlers', addedAttributes.events);
 				Vue.set(vm, 'closed', false);
