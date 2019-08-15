@@ -1,0 +1,27 @@
+{
+	"name": "sky-lightbox",
+	"version": "0.0.0",
+	"description": "Vue directive for displaying content in lightbox",
+	"main": "./dist/sky-lightbox.ssr.js",
+	"module": "./dist/sky-lightbox.esm.js",
+	"browser": "./dist/sky-lightbox.esm.js",
+	"scripts": {
+		"dist": "yarn install && yarn rimraf dist && yarn run build",
+		"build": "yarn rollup --config rollup.config.js --environment BUILD:production"
+	},
+	"author": "Skybrud.dk",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/skybrud/sky-lightbox.git"
+	},
+	"dependencies": {
+		"vue": "^2.5.17"
+	},
+	"devDependencies": {
+		"sky-build-setup": "https://github.com/skybrud/sky-build-setup.git"
+	},
+	"peerDependencies": {
+		"vue": "^2.5.0"
+	}
+}
