@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var SkyLightboxMixin = {
 	data: function data() {
 		return {
+			currentGroup: '',
 			images: [],
 			titles: [],
 			visibleUI: true,
@@ -12,7 +13,6 @@ var SkyLightboxMixin = {
 			closed: true,
 			uiTimeout: null,
 			handlers: {},
-			thumbnails: false,
 		};
 	},
 	watch: {
@@ -37,8 +37,9 @@ var SkyLightboxMixin = {
 		},
 		close: function close() {
 			if (!this.closed) {
-				document.querySelector('body').classList.remove('body-fs-v-img');
-				this.images = [];
+				// document.querySelector('body').classList.remove('body-fs-v-img'); // ? Doesn't seem to be used
+				this.currentGroup = '';
+				this.images = []; // ? Does clearing images et al. on close ruin possibilities of transitions and animations?
 				this.currentImageIndex = 0;
 				this.closed = true;
 			}
@@ -55,7 +56,17 @@ var SkyLightboxMixin = {
 			}
 		},
 		select: function select(selectedImage) {
+			var this$1 = this;
+
+			if (this.images.length) { // Possible failsafe for unreasonable numbers
+				while (selectedImage < 0) {
+					selectedImage += this$1.images.length;
+				}
+				selectedImage %= this.images.length;
+			}
+
 			this.currentImageIndex = selectedImage;
+			this.fireChangeEvent();
 		},
 		prev: function prev() {
 			if (!this.closed && this.images.length > 1) {
@@ -108,7 +119,6 @@ var addPluginAttributes = function (el, binding, options) {
 	var openOn;
 	var src = el.src; // eslint-disable-line prefer-destructuring
 	var title;
-	// let thumbnails;
 	var events = {};
 
 	if (options.altAsTitle) { title = el.alt; }
@@ -116,7 +126,6 @@ var addPluginAttributes = function (el, binding, options) {
 	/* eslint-disable prefer-destructuring */
 	// Assigning values from plugin initialization options here
 	openOn = options.openOn;
-	// thumbnails = options.thumbnails;
 	/* eslint-enable prefer-destructuring */
 
 	// Overriding options if they're provided in binding.value
@@ -129,13 +138,6 @@ var addPluginAttributes = function (el, binding, options) {
 		events.opened = binding.value.opened;
 		events.closed = binding.value.closed;
 		events.changed = binding.value.changed;
-
-		// binding.value.thumbnails could be set to false, (part before || will always be ignored)
-		// that's why we're comparing it to undefined but not using approach
-		// as in src, group, title, etc.
-		// if (binding.value.thumbnails !== undefined) {
-		// 	thumbnails = binding.value.thumbnails; // eslint-disable-line prefer-destructuring
-		// }
 	}
 
 	// Setting up data attributes for dynamic properties
@@ -143,7 +145,6 @@ var addPluginAttributes = function (el, binding, options) {
 
 	if (group) { el.setAttribute('data-sky-lightbox-group', group); }
 	if (title) { el.setAttribute('data-sky-lightbox-title', title); }
-	// if (thumbnails) el.setAttribute('data-sky-lightbox-thumbnails', thumbnails);
 
 	if (!src) { console.error('sky-lightbox element missing src parameter.'); }
 
@@ -153,7 +154,6 @@ var addPluginAttributes = function (el, binding, options) {
 		title: title,
 		events: events,
 		openOn: openOn,
-		// thumbnails,
 	};
 };
 
@@ -200,16 +200,18 @@ function contruct(Vue, options) {
 			// Updating vm's data
 			el.addEventListener(addedAttributes.openOn, function () {
 				var images;
+				var currentGroup = '';
 
 				if (!el.dataset.skyLightboxGroup) {
 					images = [el];
 				} else {
 					images = Array.from(document.querySelectorAll(("[data-sky-lightbox-group=\"" + (el.dataset.skyLightboxGroup) + "\"]")));
+					currentGroup = el.dataset.skyLightboxGroup;
 				}
 
+				Vue.set(vm, 'currentGroup', currentGroup);
 				Vue.set(vm, 'images', images.map(function (e) { return e.dataset.skyLightboxSrc; }));
 				Vue.set(vm, 'titles', images.map(function (e) { return e.dataset.skyLightboxTitle; }));
-				// Vue.set(vm, 'thumbnails', el.dataset.skyLightboxThumbnails === 'true');
 				Vue.set(vm, 'currentImageIndex', images.indexOf(el));
 				Vue.set(vm, 'handlers', addedAttributes.events);
 				Vue.set(vm, 'closed', false);
@@ -280,7 +282,6 @@ var __vue_staticRenderFns__ = [];
 var install = function (Vue, settings) {
 	var defaultOptions = {
 		altAsTitle: false,
-		// thumbnails: false,
 		openOn: 'click',
 		lightbox: SkyLightbox,
 	};
