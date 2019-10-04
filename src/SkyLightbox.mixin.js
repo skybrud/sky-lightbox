@@ -31,9 +31,8 @@ export default {
 				this.handlers.changed(this.currentImageIndex);
 			}
 		},
-		close() {
+		close() { // Todo: Add clearance delay
 			if (!this.closed) {
-				// document.querySelector('body').classList.remove('body-fs-v-img'); // ? Doesn't seem to be used
 				this.currentGroup = '';
 				this.images = []; // ? Does clearing images et al. on close ruin possibilities of transitions and animations?
 				this.currentImageIndex = 0;

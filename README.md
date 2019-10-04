@@ -150,3 +150,8 @@ However, the module also supplies behind-the-scenes functionality for normal use
 | next() | Go to the next image in the gallery | n/a | void |
 | select(index) | Jump to a specific image in the gallery | index: The index of the image to jump to | void |
 | showUI() | Force `visibleUI` to true and restart the disappearence timeout | n/a | void |
+
+
+## Todo
+
+* Add data clearance delay to closing
