@@ -85,13 +85,16 @@ export default function contruct(Vue, options) {
 			// Updating vm's data
 			el.addEventListener(addedAttributes.openOn, () => {
 				let images;
+				let currentGroup = '';
 
 				if (!el.dataset.skyLightboxGroup) {
 					images = [el];
 				} else {
 					images = Array.from(document.querySelectorAll(`[data-sky-lightbox-group="${el.dataset.skyLightboxGroup}"]`));
+					currentGroup = el.dataset.skyLightboxGroup;
 				}
 
+				Vue.set(vm, 'currentGroup', currentGroup);
 				Vue.set(vm, 'images', images.map(e => e.dataset.skyLightboxSrc));
 				Vue.set(vm, 'titles', images.map(e => e.dataset.skyLightboxTitle));
 				Vue.set(vm, 'currentImageIndex', images.indexOf(el));

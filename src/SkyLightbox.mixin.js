@@ -1,6 +1,7 @@
 export default {
 	data() {
 		return {
+			currentGroup: '',
 			images: [],
 			titles: [],
 			visibleUI: true,
@@ -30,10 +31,10 @@ export default {
 				this.handlers.changed(this.currentImageIndex);
 			}
 		},
-		close() {
+		close() { // Todo: Add clearance delay
 			if (!this.closed) {
-				document.querySelector('body').classList.remove('body-fs-v-img');
-				this.images = [];
+				this.currentGroup = '';
+				this.images = []; // ? Does clearing images et al. on close ruin possibilities of transitions and animations?
 				this.currentImageIndex = 0;
 				this.closed = true;
 			}
@@ -50,7 +51,15 @@ export default {
 			}
 		},
 		select(selectedImage) {
+			if (this.images.length) { // Possible failsafe for unreasonable numbers
+				while (selectedImage < 0) {
+					selectedImage += this.images.length;
+				}
+				selectedImage %= this.images.length;
+			}
+
 			this.currentImageIndex = selectedImage;
+			this.fireChangeEvent();
 		},
 		prev() {
 			if (!this.closed && this.images.length > 1) {
